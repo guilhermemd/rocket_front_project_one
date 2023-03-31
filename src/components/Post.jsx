@@ -1,46 +1,58 @@
+import { format, formatDistanceToNow } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
+
 import { Avatar } from "./Avatar";
 import { Comment } from "./Comment";
 import styles from "./Post.module.css";
 
-export function Post() {
+export function Post(props) {
+  const { author, content, publishedAt } = props;
+
+  /****************************/
+  /*******BRAZILIAN DATE*******/
+  /****************************/
+  // const publishedDateFormatted = format(
+  //   publishedAt,
+  //   "d 'de' LLLL 'às' HH:mm'h'",
+  //   {
+  //     locale: ptBR,
+  //   }
+  // );
+
+  const publishedDateFormatted = format(
+    publishedAt,
+    " LLLL dd, yyyy 'at' h:mm a "
+  );
+
+  const publisedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    addSuffix: true,
+    // locale: ptBR,
+  });
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src="https://avatars.githubusercontent.com/u/74270263?v=4" />
+          <Avatar src={author.avatarUrl} />
           <div className={styles.authorInfo}>
-            <strong>Guilherme.md</strong>
-            <span>Web Developer</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
 
-        <time title="28 de março 11:50:00" dateTime="2023-03-29 11:50:00">
-          Publicado há 1h
+        <time
+          title={publishedDateFormatted}
+          dateTime={publishedAt.toISOString()}
+        >
+          {publisedDateRelativeToNow}
         </time>
       </header>
 
       <div className={styles.content}>
-        <p>I'm a skilled web developer with expertise in: </p>
+        <p>{content.paragraph}</p>
+
         <p>
-          React, GraphQL, PWA-Studio, Magento 2, CSS, MongoDB, Node Express and
-          Postman.
-        </p>
-        <p>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://github.com/guilhermemd"
-          >
-            #Github{" "}
-          </a>
-        </p>
-        <p>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://gitconnected.com/guilhermemd/resume"
-          >
-            #CV{" "}
+          <a target="_blank" rel="noopener noreferrer" href={content.link}>
+            #MyWebsite{" "}
           </a>
         </p>
       </div>
