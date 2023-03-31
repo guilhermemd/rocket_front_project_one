@@ -39,6 +39,7 @@ export function Post(props) {
   }
 
   function handleNewFeedbackChange() {
+    event.target.setCustomValidity("");
     setNewFeedbackText(event.target.value);
   }
 
@@ -47,6 +48,12 @@ export function Post(props) {
       (item) => item !== feedback
     );
     setFeedbacks(feedbackWithNoDeletedOne);
+  }
+
+  const isNewFeedbackEmpty = newFeedbackText.length === 0;
+
+  function handleNewFeedbackInvalid() {
+    event.target.setCustomValidity("Please, post a feedback :)");
   }
   return (
     <article className={styles.post}>
@@ -87,9 +94,13 @@ export function Post(props) {
           placeholder="Post a feedback"
           value={newFeedbackText}
           onChange={(event) => handleNewFeedbackChange(event)}
+          onInvalid={handleNewFeedbackInvalid}
+          required
         />
         <footer>
-          <button type="submit">Send</button>
+          <button type="submit" disabled={isNewFeedbackEmpty}>
+            Send
+          </button>
         </footer>
       </form>
 
