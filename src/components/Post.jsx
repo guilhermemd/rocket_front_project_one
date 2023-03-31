@@ -34,7 +34,7 @@ export function Post(props) {
 
   function handleCreateNewComment(event) {
     event.preventDefault();
-    setFeedbacks([...feedbacks, newFeedbackText]);
+    setFeedbacks((prevState) => [...prevState, newFeedbackText]);
     setNewFeedbackText("");
   }
 
