@@ -1,5 +1,5 @@
 import { format, formatDistanceToNow } from "date-fns";
-import ptBR from "date-fns/locale/pt-BR";
+// import ptBR from "date-fns/locale/pt-BR";
 import { useState } from "react";
 
 import { Avatar } from "./Avatar";
